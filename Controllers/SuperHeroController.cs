@@ -9,15 +9,28 @@ namespace SuperHeroAPIDotnet7.Controllers
     public class SuperHeroController : ControllerBase
     {
 
-        [HttpGet]
-        public async Task<ActionResult<List<SuperHero>>> GetAllSuperHeroes()
-        {
-            var superHeroes = new List<SuperHero> {
+            private static List<SuperHero> superHeroes = new List<SuperHero> {
                 new SuperHero { Id = 1, Name = "Spider Man", FirstName = "Peter", LastName = "Parker", Place = "New York City" },
                 new SuperHero { Id = 2, Name = "Batman", FirstName = "Bruce", LastName = "Wayne", Place = "Gotham City" }
             };
+        [HttpGet]
+        public async Task<ActionResult<List<SuperHero>>> GetAllSuperHeroes()
+        {
 
             return Ok(superHeroes);
+        }
+
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ActionResult<List<SuperHero>>> GetSingleSuperHeroes(int id)
+        {
+            var hero = superHeroes.Find(s => s.Id == id);
+            if(hero == null)
+            {
+                return NotFound("No SuperHero found. Please enter a new ID.");
+            }
+            return Ok(hero);
         }
     }
 }
