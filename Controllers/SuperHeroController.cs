@@ -16,7 +16,6 @@ namespace SuperHeroAPIDotnet7.Controllers
         [HttpGet]
         public async Task<ActionResult<List<SuperHero>>> GetAllSuperHeroes()
         {
-
             return Ok(superHeroes);
         }
 
@@ -31,6 +30,13 @@ namespace SuperHeroAPIDotnet7.Controllers
                 return NotFound("No SuperHero found. Please enter a new ID.");
             }
             return Ok(hero);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<SuperHero>> AddHero([FromBody]SuperHero hero)
+        {
+            superHeroes.Add(hero);
+            return Ok(superHeroes);
         }
     }
 }
