@@ -55,5 +55,18 @@ namespace SuperHeroAPIDotnet7.Controllers
             hero.Place = request.Place;
             return Ok(superHeroes);
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<ActionResult<List<SuperHero>>> DeleteHero(int id)
+        {
+            var hero = superHeroes.FirstOrDefault(s => s.Id == id);
+            if (hero == null)
+            {
+                return NotFound("No SuperHero found. Please enter a new ID.");
+            }
+            superHeroes.Remove(hero);
+            return Ok(superHeroes);
+        }
     }
 }
